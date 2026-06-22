@@ -1,0 +1,70 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* =========================================================
+   Base
+   ========================================================= */
+@layer base {
+  html {
+    scroll-behavior: smooth;
+  }
+  body {
+    @apply bg-ink text-paper font-body antialiased;
+    font-size: 17px;
+    line-height: 1.6;
+  }
+  ::selection {
+    @apply bg-gold/30 text-paper;
+  }
+  /* Focus ring */
+  *:focus-visible {
+    outline: 2px solid theme('colors.azure');
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+  /* Reduced motion */
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+    html { scroll-behavior: auto; }
+  }
+}
+
+/* =========================================================
+   Reusable component classes
+   ========================================================= */
+@layer components {
+  .container-page {
+    @apply max-w-5xl mx-auto px-6 sm:px-10;
+  }
+  .section-label {
+    @apply font-mono text-xs text-silver uppercase tracking-wider mb-3;
+  }
+  .heading-display {
+    @apply font-display font-medium tracking-tight;
+  }
+  .chip {
+    @apply inline-flex items-center gap-1.5 font-mono text-xs px-2.5 py-1 rounded
+           bg-ink-3 text-silver border border-rule transition-colors;
+  }
+  .chip-active {
+    @apply bg-paper text-ink border-paper;
+  }
+.schema-grid {
+  @apply flex flex-col border-t border-b border-rule divide-y divide-rule;
+}
+.schema-cell {
+  @apply flex flex-col sm:flex-row sm:items-baseline gap-1 sm:gap-4 px-4 py-2.5;
+}
+.schema-cell dt {
+  @apply font-mono text-[0.7rem] text-silver uppercase tracking-wider
+         sm:min-w-[7rem] sm:flex-shrink-0 mb-0;
+}
+.schema-cell dd {
+  @apply text-sm text-paper m-0;
+}
+}
