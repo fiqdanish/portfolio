@@ -55,19 +55,19 @@ export default function About() {
             web-scale ingestion and cloud orchestration to dimensional modeling
             and BI delivery.
           </p>
-          <p className="text-silver italic">
+          <p className="text-lg">
             What I enjoy most is the part where messy, unreliable data becomes
-            something you can actually trust — scraping 150,000+ car listings and
-            wrestling them into a clean dataset, or designing a star schema that
+            something you can actually trust like scraping 150,000+ car listings and
+            wrestling them into a clean dataset, or designing a dimesional model that
             makes a tangled business process finally make sense. I like the
             engineering discipline behind it: making things fast, making them
             reliable, and making them hold up when the data is bigger or uglier
             than expected.
           </p>
-          <p className="text-silver italic">
+          <p className="text-lg">
             Outside the technical work, I lead the External Affairs team at PERSAKA,
             my faculty's computer science society, where I've learned things a code
-            editor can't — how to coordinate people, deliver under a deadline, and
+            editor can't such as how to coordinate people, deliver under a deadline, and
             represent a team in external communications. I'm now looking for a data
             engineering or analytics internship where I can turn raw data into
             reliable systems and put all of this to work.
