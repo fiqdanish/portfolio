@@ -29,7 +29,7 @@ function AnimatedNumber({ value, suffix = '' }) {
 
 export default function Hero() {
   return (
-    <section className="pt-24 pb-20 sm:pt-32 sm:pb-28">
+    <section className="pt-24 pb-10 sm:pt-32 sm:pb-12">
       {/* Eyebrow */}
       <motion.p
         initial={{ opacity: 0, y: 10 }}

@@ -23,6 +23,13 @@ const facts = [
     sub: 'Faculty of Computing · Universiti Teknologi Malaysia',
     meta: 'Consistent across the Data Engineering programme',
   },
+  {
+    icon: Briefcase,
+    label: 'Leadership',
+    title: 'PERSAKA — External Affairs Lead',
+    sub: 'Faculty of Computing student society',
+    meta: 'Sept 2024 – July 2025',
+  },
 ]
 
 const skills = [
@@ -49,15 +56,21 @@ export default function About() {
             and BI delivery.
           </p>
           <p className="text-silver italic">
-            [Add 2–3 sentences in your own voice: the kind of problems you
-            like solving, what you're looking for next, and one personal
-            detail that makes you memorable. Daily Sando and what running a
-            small business has taught you about operations is a great hook.]
+            What I enjoy most is the part where messy, unreliable data becomes
+            something you can actually trust — scraping 150,000+ car listings and
+            wrestling them into a clean dataset, or designing a star schema that
+            makes a tangled business process finally make sense. I like the
+            engineering discipline behind it: making things fast, making them
+            reliable, and making them hold up when the data is bigger or uglier
+            than expected.
           </p>
           <p className="text-silver italic">
-            [Optional second paragraph: your origin story with data — what
-            drew you to engineering specifically rather than analytics or
-            ML, and where you see yourself going.]
+            Outside the technical work, I lead the External Affairs team at PERSAKA,
+            my faculty's computer science society, where I've learned things a code
+            editor can't — how to coordinate people, deliver under a deadline, and
+            represent a team in external communications. I'm now looking for a data
+            engineering or analytics internship where I can turn raw data into
+            reliable systems and put all of this to work.
           </p>
         </div>
 
