@@ -9,6 +9,7 @@ import Footer from './components/Footer'
 import PipelineThread from './components/PipelineThread'
 import AnimatedBackground from './components/AnimatedBackground'
 import GlassFilter from './components/GlassFilter'
+import CustomCursor from './components/CustomCursor'
 
 function App() {
   return (
@@ -45,6 +46,8 @@ function App() {
 
         <Footer />
       </div>
+
+      <CustomCursor />
     </div>
   )
 }

@@ -63,10 +63,10 @@ void main(){
   col = mix(col, teal,    clamp(r.y * 1.2, 0.0, 1.0));
   col = mix(col, magenta, clamp(f * f * 1.4, 0.0, 1.0));
 
-  // Bright glow that tracks the cursor.
+  // Soft, subtle glow that tracks the cursor (the custom cursor is the star).
   vec2 m = (uMouse - 0.5) * vec2(aspect, 1.0);
   float d = length(p - m);
-  col += vec3(0.35, 0.50, 0.95) * (0.10 / (d * d + 0.05));
+  col += vec3(0.14, 0.20, 0.40) * (0.045 / (d * d + 0.16));
 
   col *= 1.0 - 0.28 * length(uv - 0.5);   // gentle vignette
   gl_FragColor = vec4(col, 1.0);
