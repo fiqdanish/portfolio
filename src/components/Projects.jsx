@@ -31,7 +31,7 @@ function ProjectCard({ project, index }) {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: '-50px' }}
       transition={{ duration: 0.4, delay: (index % 6) * 0.05 }}
-      className={`bg-ink-2 rounded border transition-all ${
+      className={`glass rounded border transition-all ${
         project.featured
           ? 'border-gold/30 hover:border-gold'
           : 'border-rule hover:border-paper/40'

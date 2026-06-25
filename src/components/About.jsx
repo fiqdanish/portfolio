@@ -82,7 +82,7 @@ export default function About() {
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.4, delay: i * 0.08 }}
-              className="bg-ink-2 p-5 rounded border-l-2 border-azure hover:border-gold transition-colors"
+              className="glass p-5 rounded border-l-2 border-azure hover:border-gold transition-colors"
             >
               <div className="flex items-center gap-2 mb-2">
                 <Icon size={14} className="text-silver" />

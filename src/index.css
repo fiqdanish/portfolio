@@ -54,6 +54,29 @@
   .chip-active {
     @apply bg-paper text-ink border-paper;
   }
+  /* Frosted glass: translucent fill + backdrop blur so the animated background
+     blooms through. Pair with existing border-* utilities on the element. */
+  .glass {
+    background-color: rgba(22, 26, 33, 0.4);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+  }
+  .glass-strong {
+    background-color: rgba(14, 17, 22, 0.5);
+    backdrop-filter: blur(14px);
+    -webkit-backdrop-filter: blur(14px);
+  }
+  /* Real refraction: bend the backdrop through the SVG displacement filter.
+     Only applied where url() in backdrop-filter is supported (Chromium); other
+     browsers keep the blur-only frost above. */
+  @supports (backdrop-filter: url("#g")) {
+    .glass {
+      backdrop-filter: blur(8px) url(#glass-refraction);
+    }
+    .glass-strong {
+      backdrop-filter: blur(14px) url(#glass-refraction);
+    }
+  }
 .schema-grid {
   @apply flex flex-col border-t border-b border-rule divide-y divide-rule;
 }

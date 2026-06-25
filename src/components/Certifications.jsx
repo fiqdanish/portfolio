@@ -40,7 +40,7 @@ export default function Certifications() {
               viewport={{ once: true, margin: '-50px' }}
               transition={{ duration: 0.4, delay: i * 0.1 }}
               whileHover={{ y: -4 }}
-              className={`group bg-ink-2 p-6 rounded border-l-4 ${ACCENT[cert.accent]} hover:bg-ink-3 transition-colors block`}
+              className={`group glass p-6 rounded border-l-4 ${ACCENT[cert.accent]} transition-colors block`}
             >
               <div className="flex items-start justify-between gap-3 mb-3">
                 <p className="font-mono text-xs text-silver uppercase tracking-wider">

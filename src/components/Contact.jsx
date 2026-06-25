@@ -51,7 +51,7 @@ export default function Contact() {
             viewport={{ once: true }}
             transition={{ duration: 0.4, delay: i * 0.1 }}
             whileHover={{ y: -4 }}
-            className="group bg-ink-2 p-6 rounded border border-rule hover:border-gold transition-colors"
+            className="group glass p-6 rounded border border-rule hover:border-gold transition-colors"
           >
             <div className="flex items-start justify-between gap-3 mb-4">
               <div className="w-10 h-10 rounded bg-ink flex items-center justify-center">

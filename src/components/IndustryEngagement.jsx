@@ -13,7 +13,7 @@ function EngagementCard({ item, index }) {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: '-50px' }}
       transition={{ duration: 0.4, delay: index * 0.1 }}
-      className={`bg-ink-2 rounded border ${
+      className={`glass rounded border ${
         item.isPlaceholder
           ? 'border-dashed border-silver/30 opacity-60'
           : 'border-rule hover:border-paper/40'

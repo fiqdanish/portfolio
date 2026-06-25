@@ -28,7 +28,7 @@ export default function Nav() {
   }, [])
 
   return (
-    <header className="sticky top-0 z-40 backdrop-blur-md bg-ink/80 border-b border-rule">
+    <header className="sticky top-0 z-40 glass-strong border-b border-rule">
       <div className="container-page flex items-center justify-between py-4">
         <a href="#" className="flex items-center gap-2 group">
           <span className="font-mono text-sm bg-paper text-ink px-2 py-1 rounded">af</span>
