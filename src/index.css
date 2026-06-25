@@ -35,55 +35,6 @@
 }
 
 /* =========================================================
-   Custom cursor (dot + trailing ring, blend-difference)
-   ========================================================= */
-/* Hide the native cursor only when the custom one is active (fine pointers). */
-.has-custom-cursor,
-.has-custom-cursor * {
-  cursor: none !important;
-}
-.cursor-dot,
-.cursor-ring {
-  position: fixed;
-  top: 0;
-  left: 0;
-  z-index: 9999;
-  pointer-events: none;
-  border-radius: 9999px;
-  mix-blend-mode: difference;
-  will-change: transform;
-  opacity: 0; /* shown via inline style by CustomCursor once the pointer moves */
-}
-.cursor-dot {
-  width: 7px;
-  height: 7px;
-  background: #fff;
-  transition: width 0.2s ease, height 0.2s ease, opacity 0.25s ease;
-}
-.cursor-ring {
-  width: 34px;
-  height: 34px;
-  border: 1.5px solid rgba(255, 255, 255, 0.85);
-  transition: width 0.28s ease, height 0.28s ease, background-color 0.28s ease,
-    opacity 0.25s ease;
-}
-.cursor-ring.cursor-hover {
-  width: 56px;
-  height: 56px;
-  background: rgba(255, 255, 255, 0.1);
-}
-.cursor-dot.cursor-hover {
-  width: 4px;
-  height: 4px;
-}
-@media (prefers-reduced-motion: reduce) {
-  .cursor-dot,
-  .cursor-ring {
-    transition: opacity 0.25s ease;
-  }
-}
-
-/* =========================================================
    Reusable component classes
    ========================================================= */
 @layer components {
@@ -103,28 +54,18 @@
   .chip-active {
     @apply bg-paper text-ink border-paper;
   }
-  /* Frosted glass: translucent fill + backdrop blur so the animated background
-     blooms through. Pair with existing border-* utilities on the element. */
+  /* Frosted glass: translucent fill + backdrop blur. Pair with existing
+     border-* utilities on the element. The sticky nav frosts the content that
+     scrolls behind it; cards read as translucent panels. */
   .glass {
-    background-color: rgba(22, 26, 33, 0.4);
-    backdrop-filter: blur(8px);
-    -webkit-backdrop-filter: blur(8px);
+    background-color: rgba(22, 26, 33, 0.5);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
   }
   .glass-strong {
-    background-color: rgba(14, 17, 22, 0.5);
-    backdrop-filter: blur(14px);
-    -webkit-backdrop-filter: blur(14px);
-  }
-  /* Real refraction: bend the backdrop through the SVG displacement filter.
-     Only applied where url() in backdrop-filter is supported (Chromium); other
-     browsers keep the blur-only frost above. */
-  @supports (backdrop-filter: url("#g")) {
-    .glass {
-      backdrop-filter: blur(8px) url(#glass-refraction);
-    }
-    .glass-strong {
-      backdrop-filter: blur(14px) url(#glass-refraction);
-    }
+    background-color: rgba(14, 17, 22, 0.65);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
   }
 .schema-grid {
   @apply flex flex-col border-t border-b border-rule divide-y divide-rule;
