@@ -4,39 +4,49 @@ export default {
   theme: {
     extend: {
       colors: {
-        ink: {
-          DEFAULT: '#0E1116',
-          2: '#161A21',
-          3: '#1E232C',
+        // Terminal surfaces
+        term: {
+          bg: '#0c0a0a',
+          panel: '#15110f',
+          panel2: '#1c1613',
+          line: '#2c211c',
         },
-        paper: '#ECE7DC',
-        silver: '#9AA0A6',
-        rule: '#2A2F38',
-        azure: '#5B8DEF',
-        gold: '#C9A24A',
-        bronze: '#B87333',
-        steel: '#A8A9AD',
-        warn: '#D97757',
+        // Rust / coral accent
+        rust: {
+          DEFAULT: '#e07856',
+          dim: '#6f4233',
+          bright: '#ff9b78',
+        },
+        // Text
+        fg: '#e8e2da',
+        muted: '#8a817a',
+        // Tag accent colors
+        tag: {
+          teal: '#4fd1c5',
+          violet: '#a78bfa',
+          green: '#4ade80',
+          blue: '#60a5fa',
+          rust: '#e07856',
+        },
+        success: '#4ade80',
       },
       fontFamily: {
-        display: ['Fraunces', 'Georgia', 'serif'],
-        body: ['Inter', '-apple-system', 'BlinkMacSystemFont', 'sans-serif'],
-        mono: ['JetBrains Mono', 'ui-monospace', 'SF Mono', 'monospace'],
+        mono: ['JetBrains Mono', 'ui-monospace', 'SFMono-Regular', 'monospace'],
+        sans: ['Inter', 'system-ui', '-apple-system', 'sans-serif'],
+        pixel: ['Silkscreen', 'JetBrains Mono', 'monospace'],
       },
       animation: {
-        'flow-down': 'flow-down 4s linear infinite',
-        'pulse-soft': 'pulse-soft 2.5s ease-out infinite',
+        blink: 'blink 1.1s step-end infinite',
+        'pulse-dot': 'pulse-dot 2s ease-out infinite',
       },
       keyframes: {
-        'flow-down': {
-          '0%':   { transform: 'translateY(-100%)', opacity: '0' },
-          '20%':  { opacity: '1' },
-          '80%':  { opacity: '1' },
-          '100%': { transform: 'translateY(400%)', opacity: '0' },
+        blink: {
+          '0%, 100%': { opacity: '1' },
+          '50%': { opacity: '0' },
         },
-        'pulse-soft': {
-          '0%, 100%': { boxShadow: '0 0 0 0 rgba(201, 162, 74, 0.5)' },
-          '70%':      { boxShadow: '0 0 0 10px rgba(201, 162, 74, 0)' },
+        'pulse-dot': {
+          '0%, 100%': { boxShadow: '0 0 0 0 rgba(74, 222, 128, 0.5)' },
+          '70%': { boxShadow: '0 0 0 6px rgba(74, 222, 128, 0)' },
         },
       },
     },

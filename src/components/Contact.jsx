@@ -1,75 +1,74 @@
 import { motion } from 'framer-motion'
-import { Mail, Github, Linkedin, ArrowUpRight } from 'lucide-react'
+import { Mail, Github, Linkedin } from 'lucide-react'
+import SectionHeader from './SectionHeader'
+import TerminalWindow from './TerminalWindow'
 
 const channels = [
-  {
-    id: 'email',
-    label: 'Email',
-    value: 'fiqdnsh@gmail.com',
-    href: 'mailto:fiqdnsh@gmail.com',
-    icon: Mail,
-    note: 'Fastest response',
-  },
-  {
-    id: 'github',
-    label: 'GitHub',
-    value: 'github.com/fiqdanish',
-    href: 'https://github.com/fiqdanish',
-    icon: Github,
-    note: 'Code, projects, contributions',
-  },
-  {
-    id: 'linkedin',
-    label: 'LinkedIn',
-    value: 'linkedin.com/in/afiqdanish279',
-    href: 'https://www.linkedin.com/in/afiqdanish279/',
-    icon: Linkedin,
-    note: 'Professional updates',
-  },
+  { id: 'email', key: 'email', value: 'fiqdnsh@gmail.com', href: 'mailto:fiqdnsh@gmail.com', icon: Mail, external: false },
+  { id: 'github', key: 'github', value: 'github.com/fiqdanish', href: 'https://github.com/fiqdanish', icon: Github, external: true },
+  { id: 'linkedin', key: 'linkedin', value: 'linkedin.com/in/afiqdanish279', href: 'https://www.linkedin.com/in/afiqdanish279/', icon: Linkedin, external: true },
+]
+
+const meta = [
+  { key: 'status', value: 'available for internships' },
+  { key: 'graduating', value: '2027' },
+  { key: 'location', value: 'Puchong, Selangor, MY' },
 ]
 
 export default function Contact() {
   return (
-    <section id="contact" className="py-20 border-t border-rule">
-      <p className="section-label">[ 05 · contact ]</p>
-      <h2 className="heading-display text-3xl sm:text-5xl mb-4">Get in touch</h2>
-      <p className="text-silver text-lg max-w-2xl mb-10">
-        Open to data engineering internships and graduate roles starting{' '}
-        <span className="text-paper">2027</span>. Three ways to reach me —
-        email is fastest.
-      </p>
+    <section id="contact" className="container-page border-t border-term-line py-20">
+      <SectionHeader
+        index="[05]"
+        log="reading_metadata..."
+        title="contact"
+        comment="open to data engineering & analytics internships — email is fastest."
+        command="cat metadata.json"
+      />
 
-      <div className="grid sm:grid-cols-3 gap-4">
-        {channels.map(({ id, label, value, href, icon: Icon, note }, i) => (
-          <motion.a
-            key={id}
-            href={href}
-            target={id !== 'email' ? '_blank' : undefined}
-            rel="noopener noreferrer"
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.4, delay: i * 0.1 }}
-            whileHover={{ y: -4 }}
-            className="group glass p-6 rounded border border-rule hover:border-gold transition-colors"
-          >
-            <div className="flex items-start justify-between gap-3 mb-4">
-              <div className="w-10 h-10 rounded bg-ink flex items-center justify-center">
-                <Icon size={18} className="text-gold" />
-              </div>
-              <ArrowUpRight
-                size={18}
-                className="text-silver group-hover:text-gold transition-colors"
-              />
-            </div>
-            <p className="font-mono text-xs text-silver uppercase tracking-wider mb-1">
-              {label}
-            </p>
-            <p className="font-display text-base text-paper mb-2 break-all">{value}</p>
-            <p className="text-xs text-silver">{note}</p>
-          </motion.a>
-        ))}
-      </div>
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: '-60px' }}
+        transition={{ duration: 0.5 }}
+        className="max-w-2xl"
+      >
+        <TerminalWindow title="metadata.json">
+          <pre className="font-mono text-sm leading-relaxed">
+            <span className="text-muted">{'{'}</span>
+            {'\n'}
+            {channels.map(({ id, key, value, href, icon: Icon, external }) => (
+              <span key={id}>
+                {'  '}
+                <span className="text-rust">&quot;{key}&quot;</span>
+                <span className="text-muted">: </span>
+                <a
+                  href={href}
+                  target={external ? '_blank' : undefined}
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-1.5 text-fg underline decoration-rust/40 underline-offset-2 transition-colors hover:text-rust"
+                >
+                  <Icon size={13} className="text-rust" />
+                  &quot;{value}&quot;
+                </a>
+                <span className="text-muted">,</span>
+                {'\n'}
+              </span>
+            ))}
+            {meta.map(({ key, value }, i) => (
+              <span key={key}>
+                {'  '}
+                <span className="text-rust">&quot;{key}&quot;</span>
+                <span className="text-muted">: </span>
+                <span className="text-tag-green">&quot;{value}&quot;</span>
+                <span className="text-muted">{i === meta.length - 1 ? '' : ','}</span>
+                {'\n'}
+              </span>
+            ))}
+            <span className="text-muted">{'}'}</span>
+          </pre>
+        </TerminalWindow>
+      </motion.div>
     </section>
   )
 }

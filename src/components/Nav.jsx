@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react'
 
 const links = [
-  { href: '#about',          label: 'About' },
-  { href: '#projects',       label: 'Projects' },
-  { href: '#certifications', label: 'Certifications' },
-  { href: '#industry',       label: 'Industry' },
-  { href: '#contact',        label: 'Contact' },
+  { href: '#about',          num: '[01]', label: 'about' },
+  { href: '#projects',       num: '[02]', label: 'workspaces' },
+  { href: '#certifications', num: '[03]', label: 'credentials' },
+  { href: '#industry',       num: '[04]', label: '~/logs' },
+  { href: '#contact',        num: '[05]', label: 'contact' },
 ]
 
 export default function Nav() {
@@ -28,33 +28,27 @@ export default function Nav() {
   }, [])
 
   return (
-    <header className="sticky top-0 z-40 glass-strong border-b border-rule">
-      <div className="container-page flex items-center justify-between py-4">
-        <a href="#" className="flex items-center gap-2 group">
-          <span className="font-mono text-sm bg-paper text-ink px-2 py-1 rounded">af</span>
-          <span className="font-display text-lg hidden sm:inline group-hover:text-gold transition-colors">
-            Afiq
-          </span>
-        </a>
-        <nav>
-          <ul className="flex gap-4 sm:gap-7">
-            {links.map(({ href, label }) => (
+    <header className="sticky top-0 z-40 border-b border-term-line bg-term-bg/80 backdrop-blur-sm">
+      <nav className="container-page py-3">
+        <ul className="flex flex-wrap items-center justify-center gap-x-5 gap-y-1 sm:gap-x-8 font-mono text-sm">
+          {links.map(({ href, num, label }) => {
+            const active = activeId === href.slice(1)
+            return (
               <li key={href}>
                 <a
                   href={href}
-                  className={`text-sm font-medium transition-colors ${
-                    activeId === href.slice(1)
-                      ? 'text-paper'
-                      : 'text-silver hover:text-paper'
+                  className={`group inline-flex items-center gap-1.5 transition-colors ${
+                    active ? 'text-fg' : 'text-muted hover:text-fg'
                   }`}
                 >
-                  {label}
+                  <span className="text-rust">{num}</span>
+                  <span className={active ? 'font-bold' : ''}>{label}</span>
                 </a>
               </li>
-            ))}
-          </ul>
-        </nav>
-      </div>
+            )
+          })}
+        </ul>
+      </nav>
     </header>
   )
 }

@@ -1,122 +1,134 @@
 import { motion } from 'framer-motion'
-import { GraduationCap, MapPin, Briefcase } from 'lucide-react'
+import { GraduationCap, MapPin, Briefcase, FileDown } from 'lucide-react'
+import SectionHeader from './SectionHeader'
 
 const facts = [
   {
     icon: GraduationCap,
-    label: 'Education',
+    label: 'education',
     title: 'Universiti Teknologi Malaysia',
     sub: 'B.Sc. Computer Science (Data Engineering) · Faculty of Computing',
-    meta: 'CGPA 3.94 · Expected to Graduate at 2027',
+    meta: 'CGPA 3.94 · Expected to graduate 2027',
   },
   {
     icon: MapPin,
-    label: 'Based in',
+    label: 'based_in',
     title: 'Puchong, Selangor',
     sub: 'Open to relocation for the right role',
     meta: 'Available for internships now',
   },
   {
     icon: GraduationCap,
-    label: 'Academic standing',
+    label: 'standing',
     title: 'CGPA 3.94 / 4.00',
-    sub: 'Faculty of Computing · Universiti Teknologi Malaysia',
+    sub: 'Faculty of Computing · UTM',
     meta: 'Consistent across the Data Engineering programme',
   },
   {
     icon: Briefcase,
-    label: 'Leadership',
+    label: 'leadership',
     title: 'PERSAKA — External Affairs Lead',
-    sub: 'Faculty of Computing student society',
+    sub: "Faculty of Computing student society",
     meta: 'Sept 2024 – July 2025',
   },
 ]
 
 const skills = [
-  { group: 'Cloud & Pipelines', items: ['Azure Data Factory', 'Databricks', 'Synapse Analytics', 'ADLS Gen2', 'AWS Foundation'] },
-  { group: 'Processing',        items: ['Apache Spark', 'Apache Kafka', 'Polars', 'Pandas', 'Python multiprocessing'] },
-  { group: 'BI & Visualizations', items: ['Power BI', 'Alteryx Designer', 'Matplotlib', 'Seaborn'] },
-  { group: 'Languages',         items: ['Python', 'SQL (MySQL)', 'Dart', 'C', 'C++', 'Java'] },
-  { group: 'Tooling',           items: ['GitHub', 'SAP Build Apps', 'VS Code'] },
+  { group: 'cloud_&_pipelines', items: ['Azure Data Factory', 'Databricks', 'Synapse Analytics', 'ADLS Gen2', 'AWS Foundation'] },
+  { group: 'processing', items: ['Apache Spark', 'Apache Kafka', 'Polars', 'Pandas', 'Python multiprocessing'] },
+  { group: 'bi_&_visualization', items: ['Power BI', 'Alteryx Designer', 'Matplotlib', 'Seaborn'] },
+  { group: 'languages', items: ['Python', 'SQL (MySQL)', 'Dart', 'C', 'C++', 'Java'] },
+  { group: 'tooling', items: ['GitHub', 'SAP Build Apps', 'VS Code'] },
+]
+
+const bio = [
+  "I'm a Data Engineering undergraduate at the Faculty of Computing, UTM, with a 3.94 CGPA and a habit of taking projects further than the marking rubric asks. My work spans the full data path — from web-scale ingestion and cloud orchestration to dimensional modeling and BI delivery.",
+  "What I enjoy most is the part where messy, unreliable data becomes something you can actually trust — scraping 150,000+ car listings into a clean dataset, or designing a dimensional model that makes a tangled business process finally make sense. I like the engineering discipline behind it: making things fast, reliable, and able to hold up when the data is bigger or uglier than expected.",
+  "Outside the technical work, I lead the External Affairs team at PERSAKA, my faculty's computer science society — where I've learned things a code editor can't: coordinating people, delivering under a deadline, and representing a team. I'm now looking for a data engineering or analytics internship to put all of this to work.",
 ]
 
 export default function About() {
   return (
-    <section id="about" className="py-20 border-t border-rule">
-      <p className="section-label">[ 01 · about ]</p>
-      <h2 className="heading-display text-3xl sm:text-5xl mb-6">About me</h2>
+    <section id="about" className="container-page border-t border-term-line py-20">
+      <SectionHeader
+        index="[01]"
+        log="initializing_profile..."
+        title="about"
+        comment="who I am, in plain text."
+        command="cat ~/about.md"
+      />
 
-      <div className="grid lg:grid-cols-5 gap-12 mb-16">
-        <div className="lg:col-span-3 space-y-5 text-paper leading-relaxed">
-          <p className="text-lg">
-            I'm a Data Engineering undergraduate at the Faculty of Computing, UTM,
-            with a 3.94 CGPA and a habit of taking projects further than the
-            marking rubric asks. My work spans the full data path from
-            web-scale ingestion and cloud orchestration to dimensional modeling
-            and BI delivery.
-          </p>
-          <p className="text-lg">
-            What I enjoy most is the part where messy, unreliable data becomes
-            something you can actually trust like scraping 150,000+ car listings and
-            wrestling them into a clean dataset, or designing a dimesional model that
-            makes a tangled business process finally make sense. I like the
-            engineering discipline behind it: making things fast, making them
-            reliable, and making them hold up when the data is bigger or uglier
-            than expected.
-          </p>
-          <p className="text-lg">
-            Outside the technical work, I lead the External Affairs team at PERSAKA,
-            my faculty's computer science society, where I've learned things a code
-            editor can't such as how to coordinate people, deliver under a deadline, and
-            represent a team in external communications. I'm now looking for a data
-            engineering or analytics internship where I can turn raw data into
-            reliable systems and put all of this to work.
-          </p>
-        </div>
+      <div className="grid gap-10 lg:grid-cols-5">
+        {/* readme / bio */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: '-60px' }}
+          transition={{ duration: 0.5 }}
+          className="panel p-6 lg:col-span-3"
+        >
+          <p className="comment text-xs mb-4">// readme.md</p>
+          <div className="space-y-4 text-sm leading-relaxed text-fg/90">
+            {bio.map((p, i) => (
+              <p key={i}>{p}</p>
+            ))}
+          </div>
 
-        <div className="lg:col-span-2 space-y-3">
+          <a
+            href="/resume.pdf"
+            download="Afiq_Danish_Resume.pdf"
+            className="mt-6 inline-flex items-center gap-2 rounded border border-rust/50 px-4 py-2
+                       font-mono text-sm text-rust transition-colors hover:bg-rust/10"
+          >
+            <FileDown size={15} /> Download Resume PDF
+          </a>
+        </motion.div>
+
+        {/* fact cards */}
+        <div className="space-y-3 lg:col-span-2">
           {facts.map(({ icon: Icon, label, title, sub, meta }, i) => (
             <motion.div
               key={label}
               initial={{ opacity: 0, x: 20 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
-              transition={{ duration: 0.4, delay: i * 0.08 }}
-              className="glass p-5 rounded border-l-2 border-azure hover:border-gold transition-colors"
+              transition={{ duration: 0.4, delay: i * 0.07 }}
+              className="panel panel-hover border-l-2 border-l-rust p-4"
             >
-              <div className="flex items-center gap-2 mb-2">
-                <Icon size={14} className="text-silver" />
-                <p className="font-mono text-xs text-silver uppercase tracking-wider">
-                  {label}
-                </p>
+              <div className="mb-1.5 flex items-center gap-2">
+                <Icon size={13} className="text-rust" />
+                <p className="font-mono text-xs text-muted">{label}:</p>
               </div>
-              <p className="font-display text-lg mb-1">{title}</p>
-              <p className="text-sm text-paper mb-1">{sub}</p>
-              <p className="text-xs text-silver">{meta}</p>
+              <p className="font-mono text-sm font-bold text-fg">{title}</p>
+              <p className="mt-0.5 text-xs text-fg/80">{sub}</p>
+              <p className="mt-1 font-mono text-[0.7rem] text-muted">{meta}</p>
             </motion.div>
           ))}
         </div>
       </div>
 
-      {/* Skills matrix */}
-      <div>
-        <p className="font-mono text-xs text-silver uppercase tracking-wider mb-4">
-          Technical stack
-        </p>
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-6">
-          {skills.map((g) => (
-            <div key={g.group}>
-              <h3 className="font-display text-base text-gold mb-2">{g.group}</h3>
-              <ul className="text-sm text-paper space-y-1">
-                {g.items.map((item) => (
-                  <li key={item} className="font-mono text-[0.85rem]">
-                    <span className="text-silver">›</span> {item}
-                  </li>
-                ))}
-              </ul>
-            </div>
-          ))}
-        </div>
+      {/* competency layers */}
+      <p className="comment mt-14 mb-4 text-sm">// competencies</p>
+      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+        {skills.map((g, i) => (
+          <motion.div
+            key={g.group}
+            initial={{ opacity: 0, y: 16 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: '-40px' }}
+            transition={{ duration: 0.4, delay: (i % 3) * 0.06 }}
+            className="panel p-4"
+          >
+            <h3 className="mb-3 font-mono text-sm text-rust">{g.group}</h3>
+            <ul className="space-y-1.5">
+              {g.items.map((item) => (
+                <li key={item} className="font-mono text-[0.8rem] text-fg/85">
+                  <span className="text-rust/60">›</span> {item}
+                </li>
+              ))}
+            </ul>
+          </motion.div>
+        ))}
       </div>
     </section>
   )

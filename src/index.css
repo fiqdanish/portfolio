@@ -3,26 +3,41 @@
 @tailwind utilities;
 
 /* =========================================================
-   Base
+   Base — terminal theme
    ========================================================= */
 @layer base {
   html {
     scroll-behavior: smooth;
   }
   body {
-    @apply bg-ink text-paper font-body antialiased;
-    font-size: 17px;
-    line-height: 1.6;
+    @apply bg-term-bg text-fg font-mono antialiased;
+    font-size: 15px;
+    line-height: 1.65;
   }
   ::selection {
-    @apply bg-gold/30 text-paper;
+    @apply bg-rust/30 text-fg;
   }
-  /* Focus ring */
   *:focus-visible {
-    outline: 2px solid theme('colors.azure');
-    outline-offset: 3px;
+    outline: 2px solid theme('colors.rust.DEFAULT');
+    outline-offset: 2px;
     border-radius: 2px;
   }
+
+  /* Custom terminal scrollbar */
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+  ::-webkit-scrollbar-track {
+    background: #0c0a0a;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: #2c211c;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    background: #6f4233;
+  }
+
   /* Reduced motion */
   @media (prefers-reduced-motion: reduce) {
     *, *::before, *::after {
@@ -35,49 +50,60 @@
 }
 
 /* =========================================================
-   Reusable component classes
+   Reusable terminal component classes
    ========================================================= */
 @layer components {
   .container-page {
-    @apply max-w-5xl mx-auto px-6 sm:px-10;
+    @apply max-w-6xl mx-auto px-4 sm:px-8;
   }
-  .section-label {
-    @apply font-mono text-xs text-silver uppercase tracking-wider mb-3;
+
+  /* macOS-style terminal window */
+  .term-window {
+    @apply rounded-lg border border-term-line bg-term-panel/85 overflow-hidden;
   }
-  .heading-display {
-    @apply font-display font-medium tracking-tight;
+  .term-titlebar {
+    @apply flex items-center gap-2 px-4 py-2.5 border-b border-term-line bg-term-panel2;
   }
-  .chip {
-    @apply inline-flex items-center gap-1.5 font-mono text-xs px-2.5 py-1 rounded
-           bg-ink-3 text-silver border border-rule transition-colors;
+  .term-dot {
+    @apply w-3 h-3 rounded-full;
   }
-  .chip-active {
-    @apply bg-paper text-ink border-paper;
+
+  /* Generic panel / card surface */
+  .panel {
+    @apply rounded-lg border border-term-line bg-term-panel/60 transition-colors;
   }
-  /* Frosted glass: translucent fill + backdrop blur. Pair with existing
-     border-* utilities on the element. The sticky nav frosts the content that
-     scrolls behind it; cards read as translucent panels. */
-  .glass {
-    background-color: rgba(22, 26, 33, 0.5);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
+  .panel-hover {
+    @apply hover:border-rust/50;
   }
-  .glass-strong {
-    background-color: rgba(14, 17, 22, 0.65);
-    backdrop-filter: blur(16px);
-    -webkit-backdrop-filter: blur(16px);
+
+  /* Tags / pills */
+  .tag {
+    @apply inline-flex items-center gap-1 font-mono text-[0.7rem] px-2 py-0.5 rounded border whitespace-nowrap;
   }
-.schema-grid {
-  @apply flex flex-col border-t border-b border-rule divide-y divide-rule;
-}
-.schema-cell {
-  @apply flex flex-col sm:flex-row sm:items-baseline gap-1 sm:gap-4 px-4 py-2.5;
-}
-.schema-cell dt {
-  @apply font-mono text-[0.7rem] text-silver uppercase tracking-wider
-         sm:min-w-[7rem] sm:flex-shrink-0 mb-0;
-}
-.schema-cell dd {
-  @apply text-sm text-paper m-0;
-}
+  .tag-rust   { @apply border-rust/40   text-rust      bg-rust/[0.06]; }
+  .tag-teal   { @apply border-tag-teal/40   text-tag-teal   bg-tag-teal/[0.06]; }
+  .tag-violet { @apply border-tag-violet/40 text-tag-violet bg-tag-violet/[0.06]; }
+  .tag-green  { @apply border-tag-green/40  text-tag-green  bg-tag-green/[0.06]; }
+  .tag-blue   { @apply border-tag-blue/40   text-tag-blue   bg-tag-blue/[0.06]; }
+
+  /* Blinking caret */
+  .caret::after {
+    content: '▋';
+    @apply text-rust ml-0.5 animate-blink;
+  }
+
+  /* Bold sans section title (used sparingly over the mono UI) */
+  .title-bold {
+    @apply font-sans font-bold tracking-tight text-fg;
+  }
+
+  /* Terminal comment line */
+  .comment {
+    @apply font-mono text-muted;
+  }
+
+  /* Line-number gutter marker */
+  .gutter-num {
+    @apply font-mono text-[0.7rem] text-muted/50 select-none;
+  }
 }
