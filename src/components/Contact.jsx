@@ -10,7 +10,7 @@ const channels = [
 ]
 
 const meta = [
-  { key: 'status', value: 'available for internships' },
+  { key: 'status', value: 'currently on internship' },
   { key: 'graduating', value: '2027' },
   { key: 'location', value: 'Puchong, Selangor, MY' },
 ]

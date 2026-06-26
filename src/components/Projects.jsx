@@ -17,7 +17,7 @@ const LINK_META = {
 
 const STATUS = {
   Delivered:     { color: 'tag-green',  label: 'delivered' },
-  'In-progress': { color: 'tag-rust',   label: 'in-progress' },
+  'In-progress': { color: 'tag-blue',   label: 'in-progress' },
   Draft:         { color: 'tag-muted',  label: 'draft' },
 }
 

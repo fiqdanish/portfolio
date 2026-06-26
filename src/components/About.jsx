@@ -15,7 +15,7 @@ const facts = [
     label: 'based_in',
     title: 'Puchong, Selangor',
     sub: 'Open to relocation for the right role',
-    meta: 'Available for internships now',
+    meta: 'Not available at the moment due to internship',
   },
   {
     icon: GraduationCap,
@@ -73,15 +73,6 @@ export default function About() {
               <p key={i}>{p}</p>
             ))}
           </div>
-
-          <a
-            href="/resume.pdf"
-            download="Afiq_Danish_Resume.pdf"
-            className="mt-6 inline-flex items-center gap-2 rounded border border-rust/50 px-4 py-2
-                       font-mono text-sm text-rust transition-colors hover:bg-rust/10"
-          >
-            <FileDown size={15} /> Download Resume PDF
-          </a>
         </motion.div>
 
         {/* fact cards */}
