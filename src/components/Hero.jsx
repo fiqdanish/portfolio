@@ -5,6 +5,7 @@ import { projects } from '../data/projects'
 import { certifications } from '../data/certifications'
 import TerminalWindow from './TerminalWindow'
 import Tag from './Tag'
+import asciiPortrait from '../assets/portrait.txt?raw'
 
 function AnimatedNumber({ value }) {
   const ref = useRef(null)
@@ -26,51 +27,17 @@ function AnimatedNumber({ value }) {
   )
 }
 
-// Placeholder ASCII portrait — replaced with a real conversion once a photo is provided.
-const ASCII_PORTRAIT = `                                            
-                                            
-                                            
-                                            
-                +$&&&&&$$$X:                
-              $$$&&&&$&&&$&&&X              
-           +X$$&$$&&$xX&&&&&&&$:            
-         .:&&&&&&Xx;;;:;;+X&&$&X:           
-         &&&&X&&X;;::::::;+$&&&&$;          
-        x&&&&&&$+;::::::::;X&&&&&&X         
-        &&&&&&&+;:::::.:::;+&&&&&&X         
-        :&&&&&+++$X+;;;+XX++++&&$X          
-          :&&+x$;$;;;:;+x;&+X+;&x           
-           ;+;;;;;;;;::;;:;;;;;x+           
-           +x+;::::+;::;;:::;;;+;           
-            ;+;::::x+$$;+:::;;;;            
-             :+;;;;;;::;;;;;;+              
-              ++;;;+;::;+;;++;              
-               +++++;;;;+;++;               
-              &++X+;;;;;;;+++               
-           :&&&+++++X$$$X+;+&&&&            
-       &&&&&&&&&+++++xX++;++&&&&&&$         
-   $&&&&&&&&&&&&$+++++++;;$&&&&&&&&&&&$$    
-&&&&&&&&&&&&&&&&&$;;+++;;X&&&&&&&&&&&&&&&&. 
-&&&&&&&&&&&&&&&&&&&;;;:;&&&&&&&&&&&&&&&&&&&&
-&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
-&&&&&&&&&&&&&&&&&&&&&X&&&&&&&&&&&&&&&&&&&&&&
-&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
-&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
-&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
-&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&
-`
-
 const EXPERTISE = [
-  { label: 'Data Engineering', color: 'rust' },
-  { label: 'Cloud Pipelines', color: 'teal' },
-  { label: 'Apache Spark', color: 'violet' },
-  { label: 'Dimensional Modeling', color: 'blue' },
-  { label: 'Power BI', color: 'green' },
-  { label: 'Python · SQL', color: 'rust' },
+  'Data Engineering',
+  'Cloud Pipelines',
+  'Apache Spark',
+  'Dimensional Modeling',
+  'Power BI',
+  'Python · SQL',
 ]
 
 export default function Hero() {
-  // Press ENTER from the landing to "explore" — scrolls into the work.
+  // Press ENTER from the landing to "explore".
   useEffect(() => {
     const onKey = (e) => {
       if (
@@ -94,7 +61,7 @@ export default function Hero() {
       >
         <TerminalWindow title="~/portfolio — zsh">
           {/* boot line */}
-          <p className="font-mono text-sm text-fg/90 mb-8">
+          <p className="mb-8 font-mono text-sm text-fg/90">
             <span className="text-rust">&gt;</span> Extracting<span className="text-muted">....</span>{' '}
             Transforming<span className="text-muted">.....</span> Loading
             <span className="text-muted">......</span>
@@ -102,61 +69,55 @@ export default function Hero() {
           </p>
 
           {/* portrait + name */}
-          <div className="flex flex-col sm:flex-row sm:items-center gap-6 sm:gap-10 mb-8">
+          <div className="mb-8 flex flex-col gap-6 sm:flex-row sm:items-center sm:gap-10">
             <pre
               aria-hidden="true"
-              className="hidden sm:block font-mono text-[7px] leading-[7px] text-rust/70 select-none"
+              className="hidden select-none font-mono text-[8px] leading-[8px] text-rust/80 sm:block"
             >
-              {ASCII_PORTRAIT}
+              {asciiPortrait}
             </pre>
             <div>
-              <h1 className="font-pixel text-rust leading-[1.15] text-3xl sm:text-5xl">
+              <h1 className="font-pixel text-3xl leading-[1.15] text-rust sm:text-5xl">
                 AFIQ
                 <br />
                 DANISH
               </h1>
-              <p className="font-mono text-sm text-muted mt-4">
+              <p className="mt-4 font-mono text-sm text-muted">
                 The <span className="text-fg">&quot;Data Engineer&quot;</span>
               </p>
             </div>
           </div>
 
           {/* expertise */}
-          <p className="comment text-sm mb-3">// Expertise</p>
-          <div className="flex flex-wrap gap-2 mb-6">
-            {EXPERTISE.map((e) => (
-              <Tag key={e.label} color="rust">
-                {e.label}
+          <p className="comment mb-3 text-sm">// Expertise</p>
+          <div className="mb-6 flex flex-wrap gap-2">
+            {EXPERTISE.map((label) => (
+              <Tag key={label} color="rust">
+                {label}
               </Tag>
             ))}
           </div>
 
-          <p className="comment text-sm italic mb-8">
+          <p className="comment mb-8 text-sm italic">
             // Building reliable systems that turn messy data into something you can trust.
           </p>
 
           {/* command + metrics */}
-          <p className="font-mono text-sm text-fg/90 mb-2">
+          <p className="mb-2 font-mono text-sm text-fg/90">
             <span className="text-rust">&gt;</span> python3 -m afiq_danish --verbose
           </p>
-          <p className="font-mono text-xs text-muted mb-8">
-            // metrics: cgpa=<span className="text-tag-green">
-              <AnimatedNumber value={3.94} />
-            </span>{' '}
-            projects=<span className="text-tag-green">
-              <AnimatedNumber value={projects.length} />
-            </span>{' '}
-            certifications=<span className="text-tag-green">
-              <AnimatedNumber value={certifications.length} />
-            </span>
+          <p className="mb-8 font-mono text-xs text-muted">
+            // metrics: cgpa=<span className="text-tag-green"><AnimatedNumber value={3.94} /></span>{' '}
+            projects=<span className="text-tag-green"><AnimatedNumber value={projects.length} /></span>{' '}
+            certifications=<span className="text-tag-green"><AnimatedNumber value={certifications.length} /></span>
           </p>
 
           {/* success box */}
           <button
             type="button"
             onClick={() => document.querySelector('#about')?.scrollIntoView({ behavior: 'smooth' })}
-            className="block w-full text-left rounded border border-success/40 bg-success/[0.06]
-                       px-4 py-3 font-mono text-sm text-success transition-colors hover:bg-success/[0.12]"
+            className="block w-full rounded border border-success/40 bg-success/[0.06] px-4 py-3
+                       text-left font-mono text-sm text-success transition-colors hover:bg-success/[0.12]"
           >
             [SUCCESS] Press return/ENTER to explore my work.
           </button>
@@ -167,7 +128,7 @@ export default function Hero() {
               href="https://github.com/fiqdanish"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-1.5 text-muted hover:text-rust transition-colors"
+              className="inline-flex items-center gap-1.5 text-muted transition-colors hover:text-rust"
             >
               <Github size={14} /> github
             </a>
@@ -175,7 +136,7 @@ export default function Hero() {
               href="https://linkedin.com/in/afiqdanish279"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-1.5 text-muted hover:text-rust transition-colors"
+              className="inline-flex items-center gap-1.5 text-muted transition-colors hover:text-rust"
             >
               <Linkedin size={14} /> linkedin
             </a>
