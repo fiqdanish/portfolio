@@ -131,13 +131,15 @@ export default function IndustryEngagement() {
             <span className="text-rust">&gt;</span> Streaming latest talks &amp; visits…
             <span className="caret" />
           </p>
-          {industryEngagements.map((item, i) => (
-            <EngagementRow
-              key={item.id}
-              item={item}
-              last={i === industryEngagements.length - 1}
-            />
-          ))}
+          <div className="max-h-[32rem] overflow-y-auto">
+            {industryEngagements.map((item, i) => (
+              <EngagementRow
+                key={item.id}
+                item={item}
+                last={i === industryEngagements.length - 1}
+              />
+            ))}
+          </div>
         </TerminalWindow>
       </motion.div>
     </section>
