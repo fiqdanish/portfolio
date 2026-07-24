@@ -120,7 +120,7 @@ export const projects = [
     title: 'eHadir - Attendance Management System',
     course: 'Application Development · Industry Project',
     semester: 'Sem II 2025/26',
-    status: 'In-progress',
+    status: 'Delivered',
     featured: true,
     role: 'Group · Module Owner',
     summary:
