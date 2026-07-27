@@ -6,14 +6,14 @@ import Certifications from './components/Certifications'
 import IndustryEngagement from './components/IndustryEngagement'
 import Contact from './components/Contact'
 import Footer from './components/Footer'
-import BinaryRain from './components/BinaryRain'
+import AmbientBackground from './components/AmbientBackground'
 import ScrollTopButton from './components/ScrollTopButton'
 
 function App() {
   return (
     <div className="relative min-h-screen">
-      {/* Falling binary backdrop (z-0, behind everything). */}
-      <BinaryRain />
+      {/* Calm ambient backdrop (§14 — replaces the moving binary rain). */}
+      <AmbientBackground />
 
       {/* All content sits above the backdrop. */}
       <div className="relative z-10">

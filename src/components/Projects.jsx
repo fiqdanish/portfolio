@@ -1,9 +1,11 @@
 import { useState, useMemo, forwardRef } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { projects } from '../data/projects'
-import { Github, ExternalLink, Star, ChevronDown, AppWindow, FileText, Globe, TerminalSquare } from 'lucide-react'
+import { Github, ExternalLink, Star, AppWindow, FileText, Globe, TerminalSquare, ArrowRight } from 'lucide-react'
 import SectionHeader from './SectionHeader'
 import Tag from './Tag'
+import Sheet from './Sheet'
+import { spring, springSoft, springFast } from '../lib/motion'
 
 const LINK_META = {
   repo:    { label: 'repo',    icon: Github },
@@ -16,154 +18,139 @@ const LINK_META = {
 }
 
 const STATUS = {
-  Delivered:     { color: 'tag-green',  label: 'delivered' },
-  'In-progress': { color: 'tag-blue',   label: 'in-progress' },
-  Draft:         { color: 'tag-muted',  label: 'draft' },
+  Delivered:     'text-tag-green',
+  'In-progress': 'text-rust',
+  Draft:         'text-muted',
 }
 
-const TAG_COLORS = ['teal', 'violet', 'green', 'blue', 'rust']
+const STATUS_LABEL = {
+  Delivered: 'delivered',
+  'In-progress': 'in-progress',
+  Draft: 'draft',
+}
+
 const QUICK_FILTERS = ['All', 'Featured', 'Delivered', 'In-progress', 'Draft']
 
 const ProjectCard = forwardRef(function ProjectCard({ project, index }, ref) {
   const [open, setOpen] = useState(false)
   const hasReflection = Object.values(project.reflection).some((v) => v.trim() !== '')
-  const status = STATUS[project.status] || STATUS.Draft
+
+  const reflectionFields = [
+    ['context', project.reflection.context],
+    ['approach', project.reflection.approach],
+    ["what worked / what didn't", project.reflection.outcomes],
+    ["what I'd do differently", project.reflection.learning],
+  ]
 
   return (
     <motion.article
       ref={ref}
       layout
       initial={{ opacity: 0, y: 20 }}
-      whileInView={{ opacity: 1, y: 0 }}
+      whileInView={{ opacity: 1, y: 0, transition: { ...springSoft, delay: (index % 6) * 0.04 } }}
       viewport={{ once: true, margin: '-50px' }}
-      transition={{ duration: 0.4, delay: (index % 6) * 0.05 }}
-      className={`panel ${project.featured ? 'border-rust/40 hover:border-rust' : 'panel-hover'}`}
+      whileHover={{ y: -4, transition: springFast }}
+      className={`panel p-5 ${project.featured ? 'border-rust/30' : 'panel-hover'}`}
     >
-      <div className="p-5">
-        {/* header */}
-        <div className="mb-3 flex flex-wrap items-start justify-between gap-2">
-          <div className="flex items-center gap-2">
-            <TerminalSquare size={14} className="text-rust" />
-            <span className="font-mono text-xs text-muted">{project.course}</span>
-          </div>
-          <span className="flex items-center gap-2">
-            {project.featured && (
-              <span className="inline-flex items-center gap-1 font-mono text-[0.65rem] text-rust">
-                <Star size={11} fill="currentColor" /> featured
-              </span>
-            )}
-            <span className={`font-mono text-[0.65rem] ${status.color === 'tag-muted' ? 'text-muted' : ''}`}>
-              <span className="text-muted">[</span>
-              <span className={
-                status.color === 'tag-green' ? 'text-tag-green'
-                : status.color === 'tag-rust' ? 'text-rust'
-                : 'text-muted'
-              }>
-                {' '}{status.label}{' '}
-              </span>
-              <span className="text-muted">]</span>
+      {/* header */}
+      <div className="mb-3 flex flex-wrap items-start justify-between gap-2">
+        <div className="flex items-center gap-2">
+          <TerminalSquare size={14} className="text-rust" />
+          <span className="font-mono text-xs text-muted">{project.course}</span>
+        </div>
+        <span className="flex items-center gap-2 font-mono text-[0.65rem]">
+          {project.featured && (
+            <span className="inline-flex items-center gap-1 text-rust">
+              <Star size={11} fill="currentColor" /> featured
             </span>
+          )}
+          <span className="text-muted">
+            [ <span className={STATUS[project.status] || 'text-muted'}>{STATUS_LABEL[project.status]}</span> ]
           </span>
-        </div>
-
-        <h3 className="mb-2 font-mono text-lg font-bold leading-tight text-fg">{project.title}</h3>
-        <p className="mb-4 text-sm leading-relaxed text-fg/80">{project.summary}</p>
-
-        {/* stack as #hashtags */}
-        <div className="mb-4 flex flex-wrap gap-1.5">
-          {project.stack.map((tech, i) => (
-            <Tag key={tech} color="rust" prefix="#">
-              {tech.replace(/\s+/g, '')}
-            </Tag>
-          ))}
-        </div>
-
-        {/* metadata as key: value */}
-        <dl className="mb-4 space-y-1 border-y border-term-line py-3 font-mono text-xs">
-          {Object.entries(project.metadata).map(([key, val]) => (
-            <div key={key} className="flex gap-2">
-              <dt className="shrink-0 text-rust/80">{key.toLowerCase()}:</dt>
-              <dd className="text-fg/85">{val}</dd>
-            </div>
-          ))}
-        </dl>
-
-        {/* links + reflection toggle */}
-        <div className="flex flex-wrap items-center justify-between gap-3">
-          <div className="flex flex-wrap items-center gap-4 font-mono text-xs">
-            {Object.entries(project.links).map(([key, value]) => {
-              if (key === 'platform') {
-                return (
-                  <span key={key} className="inline-flex items-center gap-1.5 text-muted">
-                    <AppWindow size={13} /> {value}
-                  </span>
-                )
-              }
-              if (!value) return null
-              const meta = LINK_META[key] || { label: key, icon: ExternalLink }
-              const Icon = meta.icon
-              return (
-                <a
-                  key={key}
-                  href={value.trim()}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-1.5 text-rust transition-colors hover:text-rust-bright"
-                >
-                  <Icon size={13} /> {meta.label}
-                </a>
-              )
-            })}
-          </div>
-
-          <button
-            onClick={() => setOpen((v) => !v)}
-            className="inline-flex items-center gap-1.5 font-mono text-xs text-muted transition-colors hover:text-fg"
-            aria-expanded={open}
-          >
-            <span className="text-rust">&gt;</span> {open ? 'close' : 'cat'} reflection.md
-            <motion.span animate={{ rotate: open ? 180 : 0 }} transition={{ duration: 0.2 }}>
-              <ChevronDown size={13} />
-            </motion.span>
-          </button>
-        </div>
+        </span>
       </div>
 
-      {/* reflection */}
-      <AnimatePresence initial={false}>
-        {open && (
-          <motion.div
-            key="reflection"
-            initial={{ height: 0, opacity: 0 }}
-            animate={{ height: 'auto', opacity: 1 }}
-            exit={{ height: 0, opacity: 0 }}
-            transition={{ duration: 0.3, ease: 'easeOut' }}
-            className="overflow-hidden border-t border-term-line"
+      <h3 className="mb-2 text-lg font-semibold leading-tight tracking-[-0.01em] text-fg">
+        {project.title}
+      </h3>
+      <p className="mb-4 text-sm leading-relaxed text-fg/75 text-body">{project.summary}</p>
+
+      {/* stack */}
+      <div className="mb-4 flex flex-wrap gap-1.5">
+        {project.stack.map((tech) => (
+          <Tag key={tech} color="rust" prefix="#">
+            {tech.replace(/\s+/g, '')}
+          </Tag>
+        ))}
+      </div>
+
+      {/* metadata */}
+      <dl className="mb-4 space-y-1 border-t border-white/[0.06] pt-3 font-mono text-xs">
+        {Object.entries(project.metadata).map(([key, val]) => (
+          <div key={key} className="flex gap-2">
+            <dt className="shrink-0 text-rust/80">{key.toLowerCase()}:</dt>
+            <dd className="text-fg/80">{val}</dd>
+          </div>
+        ))}
+      </dl>
+
+      {/* links + reflection trigger */}
+      <div className="flex flex-wrap items-center justify-between gap-3">
+        <div className="flex flex-wrap items-center gap-4 font-mono text-xs">
+          {Object.entries(project.links).map(([key, value]) => {
+            if (key === 'platform') {
+              return (
+                <span key={key} className="inline-flex items-center gap-1.5 text-muted">
+                  <AppWindow size={13} /> {value}
+                </span>
+              )
+            }
+            if (!value) return null
+            const meta = LINK_META[key] || { label: key, icon: ExternalLink }
+            const Icon = meta.icon
+            return (
+              <motion.a
+                key={key}
+                href={value.trim()}
+                target="_blank"
+                rel="noopener noreferrer"
+                whileHover={{ scale: 1.06 }}
+                whileTap={{ scale: 0.94 }}
+                transition={springFast}
+                className="inline-flex items-center gap-1.5 text-rust hover:text-rust-bright"
+              >
+                <Icon size={13} /> {meta.label}
+              </motion.a>
+            )
+          })}
+        </div>
+
+        {hasReflection && (
+          <motion.button
+            onClick={() => setOpen(true)}
+            whileHover={{ scale: 1.04 }}
+            whileTap={{ scale: 0.95 }}
+            transition={springFast}
+            className="inline-flex items-center gap-1.5 rounded-full border border-white/10 bg-white/[0.04] px-3 py-1 font-mono text-xs text-muted hover:text-fg"
           >
-            <div className="bg-term-bg/50 p-5">
-              <p className="comment mb-4 text-xs">// reflection.md</p>
-              {hasReflection ? (
-                <div className="space-y-3 text-sm leading-relaxed text-fg/85">
-                  {project.reflection.context && (
-                    <p><strong className="text-rust">context.</strong> {project.reflection.context}</p>
-                  )}
-                  {project.reflection.approach && (
-                    <p><strong className="text-rust">approach.</strong> {project.reflection.approach}</p>
-                  )}
-                  {project.reflection.outcomes && (
-                    <p><strong className="text-rust">what worked / what didn&apos;t.</strong> {project.reflection.outcomes}</p>
-                  )}
-                  {project.reflection.learning && (
-                    <p><strong className="text-rust">what I&apos;d do differently.</strong> {project.reflection.learning}</p>
-                  )}
-                </div>
-              ) : (
-                <p className="text-sm italic text-muted">// reflection pending…</p>
-              )}
-            </div>
-          </motion.div>
+            <span className="text-rust">&gt;</span> cat reflection.md
+            <ArrowRight size={12} />
+          </motion.button>
         )}
-      </AnimatePresence>
+      </div>
+
+      {/* reflection opens as a drag-to-dismiss sheet */}
+      <Sheet open={open} onClose={() => setOpen(false)} title={`reflection.md — ${project.title}`}>
+        <div className="space-y-4 text-sm leading-relaxed text-fg/85 text-body">
+          {reflectionFields.map(([label, text]) =>
+            text ? (
+              <p key={label}>
+                <strong className="text-rust">{label}.</strong> {text}
+              </p>
+            ) : null,
+          )}
+        </div>
+      </Sheet>
     </motion.article>
   )
 })
@@ -183,7 +170,7 @@ export default function Projects() {
   }, [activeFilter])
 
   return (
-    <section id="projects" className="container-page border-t border-term-line py-20">
+    <section id="projects" className="container-page py-20">
       <SectionHeader
         index="[02]"
         log="mounting_workspaces..."
@@ -192,22 +179,31 @@ export default function Projects() {
         command="ls ~/workspaces --reflections"
       />
 
-      {/* filter bar */}
-      <div className="mb-8 flex flex-wrap gap-2 font-mono text-xs">
+      {/* filter bar — spring press + shared active pill (§1,§4,§7) */}
+      <div className="mb-8 flex flex-wrap gap-1.5 font-mono text-xs">
         {QUICK_FILTERS.map((f) => {
           const active = activeFilter === f
           return (
-            <button
+            <motion.button
               key={f}
               onClick={() => setActiveFilter(f)}
-              className={`rounded border px-3 py-1.5 transition-colors ${
-                active
-                  ? 'border-rust bg-rust/10 text-rust'
-                  : 'border-term-line text-muted hover:border-rust/50 hover:text-fg'
+              whileTap={{ scale: 0.94 }}
+              transition={springFast}
+              className={`relative rounded-full px-3 py-1.5 transition-colors ${
+                active ? 'text-fg' : 'text-muted hover:text-fg'
               }`}
             >
-              {f.toLowerCase()} <span className="opacity-60">({countFor(f)})</span>
-            </button>
+              {active && (
+                <motion.span
+                  layoutId="filter-active"
+                  transition={spring}
+                  className="absolute inset-0 rounded-full border border-white/10 bg-white/[0.08]"
+                />
+              )}
+              <span className="relative">
+                {f.toLowerCase()} <span className="opacity-60">({countFor(f)})</span>
+              </span>
+            </motion.button>
           )
         })}
       </div>

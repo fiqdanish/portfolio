@@ -1,11 +1,9 @@
 import { motion } from 'framer-motion'
+import { springSoft } from '../lib/motion'
 
 /**
- * Shared section header in the terminal idiom:
- *   [LOG]: <log>
- *   [NN]  Bold Title
- *   // <comment>
- *   > <command><caret>
+ * Shared section header. §4 spring reveal; §15 the title uses the .title-bold
+ * type scale (clamped size, negative tracking, tight leading).
  */
 export default function SectionHeader({ index, log, title, comment, command }) {
   return (
@@ -13,25 +11,25 @@ export default function SectionHeader({ index, log, title, comment, command }) {
       initial={{ opacity: 0, y: 16 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: '-80px' }}
-      transition={{ duration: 0.5 }}
+      transition={springSoft}
       className="mb-10"
     >
       {log && (
-        <p className="font-mono text-xs text-muted mb-3">
+        <p className="mb-3 font-mono text-xs text-muted">
           [LOG]: {log} <span className="text-success">OK</span>
         </p>
       )}
-      <h2 className="title-bold text-2xl sm:text-4xl leading-tight">
+      <h2 className="title-bold">
         {index && (
-          <span className="font-mono text-base sm:text-lg text-rust mr-2 align-middle">
+          <span className="mr-2 align-middle font-mono text-base text-rust sm:text-lg">
             {index}
           </span>
         )}
         {title}
       </h2>
-      {comment && <p className="comment text-sm mt-3">// {comment}</p>}
+      {comment && <p className="comment mt-3 text-sm">// {comment}</p>}
       {command && (
-        <p className="font-mono text-sm text-fg/80 mt-2">
+        <p className="mt-2 font-mono text-sm text-fg/80">
           <span className="text-rust">&gt;</span> {command}
         </p>
       )}

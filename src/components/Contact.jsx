@@ -2,6 +2,7 @@ import { motion } from 'framer-motion'
 import { Mail, Github, Linkedin } from 'lucide-react'
 import SectionHeader from './SectionHeader'
 import TerminalWindow from './TerminalWindow'
+import { springSoft } from '../lib/motion'
 
 const channels = [
   { id: 'email', key: 'email', value: 'fiqdnsh@gmail.com', href: 'mailto:fiqdnsh@gmail.com', icon: Mail, external: false },
@@ -17,7 +18,7 @@ const meta = [
 
 export default function Contact() {
   return (
-    <section id="contact" className="container-page border-t border-term-line py-20">
+    <section id="contact" className="container-page py-20">
       <SectionHeader
         index="[05]"
         log="reading_metadata..."
@@ -28,9 +29,8 @@ export default function Contact() {
 
       <motion.div
         initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
+        whileInView={{ opacity: 1, y: 0, transition: springSoft }}
         viewport={{ once: true, margin: '-60px' }}
-        transition={{ duration: 0.5 }}
         className="max-w-2xl"
       >
         <TerminalWindow title="metadata.json">

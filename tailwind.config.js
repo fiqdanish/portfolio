@@ -4,23 +4,22 @@ export default {
   theme: {
     extend: {
       colors: {
-        // Terminal surfaces
+        // Base surfaces (glass is layered on top of these via CSS)
         term: {
-          bg: '#0c0a0a',
-          panel: '#15110f',
-          panel2: '#1c1613',
-          line: '#2c211c',
+          bg: '#0a0a0c',
+          panel: '#151318',
+          panel2: '#1c1a20',
+          line: '#2a2830',
         },
-        // Rust / coral accent
+        // Warm accent
         rust: {
           DEFAULT: '#e07856',
           dim: '#6f4233',
           bright: '#ff9b78',
         },
-        // Text
-        fg: '#e8e2da',
-        muted: '#8a817a',
-        // Tag accent colors
+        // Text — high-contrast for vibrancy over translucent material
+        fg: '#f2efea',
+        muted: '#9a938c',
         tag: {
           teal: '#4fd1c5',
           violet: '#a78bfa',
@@ -32,21 +31,23 @@ export default {
       },
       fontFamily: {
         mono: ['JetBrains Mono', 'ui-monospace', 'SFMono-Regular', 'monospace'],
-        sans: ['Inter', 'system-ui', '-apple-system', 'sans-serif'],
+        sans: [
+          'Inter',
+          'system-ui',
+          '-apple-system',
+          'BlinkMacSystemFont',
+          'Segoe UI',
+          'sans-serif',
+        ],
         pixel: ['Silkscreen', 'JetBrains Mono', 'monospace'],
       },
       animation: {
         blink: 'blink 1.1s step-end infinite',
-        'pulse-dot': 'pulse-dot 2s ease-out infinite',
       },
       keyframes: {
         blink: {
           '0%, 100%': { opacity: '1' },
           '50%': { opacity: '0' },
-        },
-        'pulse-dot': {
-          '0%, 100%': { boxShadow: '0 0 0 0 rgba(74, 222, 128, 0.5)' },
-          '70%': { boxShadow: '0 0 0 6px rgba(74, 222, 128, 0)' },
         },
       },
     },

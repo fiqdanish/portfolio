@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion'
 import { GraduationCap, MapPin, Briefcase, FileDown } from 'lucide-react'
 import SectionHeader from './SectionHeader'
+import { springSoft, springFast } from '../lib/motion'
 
 const facts = [
   {
@@ -49,7 +50,7 @@ const bio = [
 
 export default function About() {
   return (
-    <section id="about" className="container-page border-t border-term-line py-20">
+    <section id="about" className="container-page py-20">
       <SectionHeader
         index="[01]"
         log="initializing_profile..."
@@ -62,9 +63,8 @@ export default function About() {
         {/* readme / bio */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
+          whileInView={{ opacity: 1, y: 0, transition: springSoft }}
           viewport={{ once: true, margin: '-60px' }}
-          transition={{ duration: 0.5 }}
           className="panel p-6 lg:col-span-3"
         >
           <p className="comment text-xs mb-4">// readme.md</p>
@@ -81,9 +81,9 @@ export default function About() {
             <motion.div
               key={label}
               initial={{ opacity: 0, x: 20 }}
-              whileInView={{ opacity: 1, x: 0 }}
+              whileInView={{ opacity: 1, x: 0, transition: { ...springSoft, delay: i * 0.07 } }}
               viewport={{ once: true }}
-              transition={{ duration: 0.4, delay: i * 0.07 }}
+              whileHover={{ y: -3, transition: springFast }}
               className="panel panel-hover border-l-2 border-l-rust p-4"
             >
               <div className="mb-1.5 flex items-center gap-2">
@@ -105,9 +105,9 @@ export default function About() {
           <motion.div
             key={g.group}
             initial={{ opacity: 0, y: 16 }}
-            whileInView={{ opacity: 1, y: 0 }}
+            whileInView={{ opacity: 1, y: 0, transition: { ...springSoft, delay: (i % 3) * 0.06 } }}
             viewport={{ once: true, margin: '-40px' }}
-            transition={{ duration: 0.4, delay: (i % 3) * 0.06 }}
+            whileHover={{ y: -3, transition: springFast }}
             className="panel p-4"
           >
             <h3 className="mb-3 font-mono text-sm text-rust">{g.group}</h3>

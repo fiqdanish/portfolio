@@ -1,28 +1,34 @@
 import { useState } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
-import { Calendar, MapPin, Users, ExternalLink, ChevronDown } from 'lucide-react'
+import { motion } from 'framer-motion'
+import { MapPin, Users, ExternalLink, ArrowRight } from 'lucide-react'
 import { industryEngagements } from '../data/industry'
 import SectionHeader from './SectionHeader'
 import TerminalWindow from './TerminalWindow'
 import Tag from './Tag'
-
-const TAG_COLORS = ['teal', 'violet', 'green', 'blue', 'rust']
+import Sheet from './Sheet'
+import { springSoft, springFast } from '../lib/motion'
 
 function EngagementRow({ item, last }) {
   const [open, setOpen] = useState(false)
   const hasReflection = Object.values(item.reflection).some((v) => v.trim() !== '')
 
+  const fields = [
+    ['key takeaway', item.reflection.takeaway],
+    ['what surprised me', item.reflection.surprise],
+    ["how I'd apply this", item.reflection.application],
+    ['questions it raised', item.reflection.questions],
+  ]
+
   return (
     <motion.article
       initial={{ opacity: 0, y: 12 }}
-      whileInView={{ opacity: 1, y: 0 }}
+      whileInView={{ opacity: 1, y: 0, transition: springSoft }}
       viewport={{ once: true, margin: '-40px' }}
-      transition={{ duration: 0.4 }}
-      className={last ? '' : 'border-b border-term-line'}
+      className={last ? '' : 'border-b border-white/[0.06]'}
     >
       <div className="p-5">
         <div className="mb-1.5 flex flex-wrap items-start justify-between gap-2">
-          <h3 className="font-mono text-base font-bold text-fg">{item.title}</h3>
+          <h3 className="text-base font-semibold tracking-[-0.01em] text-fg">{item.title}</h3>
           <span className="font-mono text-xs text-muted">{item.date}</span>
         </div>
 
@@ -36,82 +42,76 @@ function EngagementRow({ item, last }) {
 
         {item.topics.length > 0 && (
           <div className="mb-3 flex flex-wrap gap-1.5">
-            {item.topics.map((t, i) => (
+            {item.topics.map((t) => (
               <Tag key={t} color="rust">{t}</Tag>
             ))}
           </div>
         )}
 
-        <p className="mb-3 text-sm leading-relaxed text-fg/80">{item.summary}</p>
+        <p className="mb-3 text-sm leading-relaxed text-fg/80 text-body">{item.summary}</p>
 
         <div className="flex flex-wrap items-center justify-between gap-3 font-mono text-xs">
           <div className="flex flex-wrap items-center gap-4">
             {item.links.linkedinPost && (
-              <a href={item.links.linkedinPost} target="_blank" rel="noopener noreferrer"
-                 className="inline-flex items-center gap-1.5 text-rust hover:text-rust-bright transition-colors">
+              <motion.a
+                href={item.links.linkedinPost}
+                target="_blank"
+                rel="noopener noreferrer"
+                whileHover={{ scale: 1.06 }}
+                whileTap={{ scale: 0.94 }}
+                transition={springFast}
+                className="inline-flex items-center gap-1.5 text-rust hover:text-rust-bright"
+              >
                 <ExternalLink size={13} /> linkedin
-              </a>
+              </motion.a>
             )}
             {item.links.hostSite && (
-              <a href={item.links.hostSite} target="_blank" rel="noopener noreferrer"
-                 className="inline-flex items-center gap-1.5 text-rust hover:text-rust-bright transition-colors">
+              <motion.a
+                href={item.links.hostSite}
+                target="_blank"
+                rel="noopener noreferrer"
+                whileHover={{ scale: 1.06 }}
+                whileTap={{ scale: 0.94 }}
+                transition={springFast}
+                className="inline-flex items-center gap-1.5 text-rust hover:text-rust-bright"
+              >
                 <ExternalLink size={13} /> host
-              </a>
+              </motion.a>
             )}
           </div>
 
-          {!item.isPlaceholder && (
-            <button onClick={() => setOpen((v) => !v)}
-              className="inline-flex items-center gap-1.5 text-muted hover:text-fg transition-colors"
-              aria-expanded={open}>
-              <span className="text-rust">&gt;</span> {open ? 'close' : 'cat'} reflection
-              <motion.span animate={{ rotate: open ? 180 : 0 }} transition={{ duration: 0.2 }}>
-                <ChevronDown size={13} />
-              </motion.span>
-            </button>
+          {!item.isPlaceholder && hasReflection && (
+            <motion.button
+              onClick={() => setOpen(true)}
+              whileHover={{ scale: 1.04 }}
+              whileTap={{ scale: 0.95 }}
+              transition={springFast}
+              className="inline-flex items-center gap-1.5 rounded-full border border-white/10 bg-white/[0.04] px-3 py-1 text-muted hover:text-fg"
+            >
+              <span className="text-rust">&gt;</span> cat reflection <ArrowRight size={12} />
+            </motion.button>
           )}
         </div>
       </div>
 
-      <AnimatePresence initial={false}>
-        {open && (
-          <motion.div
-            initial={{ height: 0, opacity: 0 }}
-            animate={{ height: 'auto', opacity: 1 }}
-            exit={{ height: 0, opacity: 0 }}
-            transition={{ duration: 0.3 }}
-            className="overflow-hidden border-t border-term-line"
-          >
-            <div className="bg-term-bg/50 p-5">
-              {hasReflection ? (
-                <div className="space-y-3 text-sm leading-relaxed text-fg/85">
-                  {item.reflection.takeaway && (
-                    <p><strong className="text-rust">key takeaway.</strong> {item.reflection.takeaway}</p>
-                  )}
-                  {item.reflection.surprise && (
-                    <p><strong className="text-rust">what surprised me.</strong> {item.reflection.surprise}</p>
-                  )}
-                  {item.reflection.application && (
-                    <p><strong className="text-rust">how I&apos;d apply this.</strong> {item.reflection.application}</p>
-                  )}
-                  {item.reflection.questions && (
-                    <p><strong className="text-rust">questions it raised.</strong> {item.reflection.questions}</p>
-                  )}
-                </div>
-              ) : (
-                <p className="text-sm italic text-muted">// reflection pending…</p>
-              )}
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+      <Sheet open={open} onClose={() => setOpen(false)} title={`reflection — ${item.title}`}>
+        <div className="space-y-4 text-sm leading-relaxed text-fg/85 text-body">
+          {fields.map(([label, text]) =>
+            text ? (
+              <p key={label}>
+                <strong className="text-rust">{label}.</strong> {text}
+              </p>
+            ) : null,
+          )}
+        </div>
+      </Sheet>
     </motion.article>
   )
 }
 
 export default function IndustryEngagement() {
   return (
-    <section id="industry" className="container-page border-t border-term-line py-20">
+    <section id="industry" className="container-page py-20">
       <SectionHeader
         index="[04]"
         log="streaming_logs..."
@@ -122,16 +122,19 @@ export default function IndustryEngagement() {
 
       <motion.div
         initial={{ opacity: 0, y: 20 }}
-        whileInView={{ opacity: 1, y: 0 }}
+        whileInView={{ opacity: 1, y: 0, transition: springSoft }}
         viewport={{ once: true, margin: '-60px' }}
-        transition={{ duration: 0.5 }}
       >
         <TerminalWindow title="~/logs — tail -f engagements.json" bodyClassName="p-0">
-          <p className="border-b border-term-line px-5 py-3 font-mono text-xs text-muted">
+          <p className="border-b border-white/[0.06] px-5 py-3 font-mono text-xs text-muted">
             <span className="text-rust">&gt;</span> Streaming latest talks &amp; visits…
             <span className="caret" />
           </p>
-          <div className="max-h-[32rem] overflow-y-auto">
+          {/* §9/§12 contained overscroll + scroll-edge fade */}
+          <div
+            className="edge-fade-y max-h-[32rem] overflow-y-auto"
+            style={{ overscrollBehavior: 'contain' }}
+          >
             {industryEngagements.map((item, i) => (
               <EngagementRow
                 key={item.id}
