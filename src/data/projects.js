@@ -215,6 +215,31 @@ export const projects = [
       outcomes: 'The shared cleaned-CSV setup made the three insights consistent and easy to extend. The main struggle was class imbalance, which I handled with class_weight=balanced and stratified splits, using weighted F1 and the confusion matrix to see where the model failed. The harder limit was weak feature correlation — even a tuned SVM was capped by the data signal, not the algorithm.', 
       learning: 'Mapping to the course outcomes (preprocessing, classification, evaluation), I would compare SVM against other models, tune hyperparameters with GridSearchCV, use cross-validation instead of a single split, and apply feature selection or SMOTE to train on signal rather than noise.' },
   },
+  {
+    id: 'rfm-spark-pipeline',
+    title: 'Customer Churn Prediction Pipeline (RFM + K-Means)',
+    course: 'Special Topic in Data Engineering · SECP3843',
+    semester: 'Sem II 2025/26',
+    status: 'Delivered',
+    featured: true,
+    role: 'Solo',
+    summary: 'An end-to-end Spark data lakehouse that segments ~5,900 e-commerce customers into churn-risk groups using RFM analysis and K-Means, turning raw transaction data into a two-page Power BI retention dashboard.',
+    stack: ['Apache Spark', 'PySpark', 'Delta Lake', 'Spark MLlib', 'Docker', 'Python', 'Power BI'],
+    metadata: {
+      Engine: 'Apache Spark (Dockerized, local)',
+      Output: 'Delta Lake Gold layer → Power BI dashboard',
+      Role: 'Solo Developer',
+    },
+    links: {
+      repo: 'https://github.com/fiqdanish/RFM-churn-pipeline',
+    },
+    reflection: {
+      context: 'E-commerce churn is silent — customers don\'t cancel, they just stop buying. The goal was a scalable pipeline that flags at-risk customers early, using only data retailers already collect.',
+      approach: 'Built a Bronze/Silver/Gold Delta Lake lakehouse on local Spark (via Docker, to sidestep a Windows/Java networking conflict), joining the real Online Retail II dataset with two Faker-generated companion datasets on shared keys. Engineered RFM features per customer, then ran K-Means with both elbow and silhouette validation.',
+      outcomes: 'Segmented ~5,878 customers into four groups — Champions, Potential Loyalist, At Risk, Churned — and shipped a two-page Power BI dashboard (Overview + Retention Playbook) that translates the segments into revenue-at-risk and win-back targeting by preferred contact channel.',
+      learning: 'Two decisions stood out: choosing k=4 over the statistically "cleaner" k=2 because it was more actionable for the business, and catching a silent join bug where synthetic product codes only matched real ones 2% of the time — a reminder to validate that joins actually work rather than trusting generated data at face value.',
+    },
+  },
 
 ]
 
