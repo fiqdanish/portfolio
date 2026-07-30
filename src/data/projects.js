@@ -132,8 +132,8 @@ export const projects = [
       Role: 'Team Leader'
     },
     links: { 
-      repo: 'https://github.com/chohjingyia23cs0296/eHadir',
-      demo: ' https://ehadir-beta.vercel.app/' 
+      repo: 'https://github.com/fiqdanish/eHadir',
+      demo: ' https://e-hadir-live.vercel.app/' 
     },
     reflection: { 
       context: 'Attendance-taking and discipline reporting in colleges are still largely manual and paper-based, which is slow, error-prone, and hard to track in real time. eHadir matters because it digitises that whole flow — scheduling, attendance, and discipline reports — into one platform that lecturers and program heads can actually rely on day to day.', 
@@ -231,7 +231,7 @@ export const projects = [
       Role: 'Solo Developer',
     },
     links: {
-      repo: 'https://github.com/fiqdanish/RFM-churn-pipeline',
+      repo: 'https://github.com/fiqdanish/RFM-churn-pipeline'
     },
     reflection: {
       context: 'E-commerce churn is silent — customers don\'t cancel, they just stop buying. The goal was a scalable pipeline that flags at-risk customers early, using only data retailers already collect.',
