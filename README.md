@@ -2,7 +2,7 @@
 
 My personal portfolio site, a Data Engineering undergraduate at Universiti Teknologi Malaysia (UTM). It presents projects, certifications, and industry engagements behind a dark, glassmorphism-inspired interface.
 
-**🔗 Live demo: [afiq-portfolio.vercel.app](https://afiq-portfolio.vercel.app/)**
+**🔗 Live demo: [fiqdanish.vercel.app](https://fiqdanish.vercel.app/)**
 
 > Built with React + Vite + Tailwind CSS, with a frosted-glass nav and cards over a clean dark theme.
 
